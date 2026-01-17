@@ -4,19 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "2e31c60ea15673e5",
+        "id": "84e3bbb817666a41",
         "type": "tabs",
         "children": [
           {
-            "id": "677ba40b709b1106",
+            "id": "0ee1b27afc7910ed",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.11.4"
+                "file": "VOCABULARY RETENTION INDEX (VRI).md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.11.4"
+              "icon": "lucide-file",
+              "title": "VOCABULARY RETENTION INDEX (VRI)"
             }
           }
         ]
@@ -181,29 +183,28 @@
       "bases:Create new base": false
     }
   },
-  "active": "677ba40b709b1106",
+  "active": "0ee1b27afc7910ed",
   "lastOpenFiles": [
-    "spaced-repetition-algorithm.md",
-    "Synaptic Retention Index.md",
-    "VOCABULARY RETENTION INDEX (VRI).md",
-    "Object Matrix.canvas",
-    "LANGUAGE.md",
     "FLASHBRICK.md",
     "CONTENT.md",
-    "flashbrick-status-states.md",
-    "VOCABULARY RETENTION RATE (VRR).md",
-    "ALLOBJECTS.md",
     "HUMAN.md",
+    "Object Matrix.canvas",
+    "Synaptic Retention Index.md",
+    "VOCABULARY RETENTION INDEX (VRI).md",
     "PRACTICE.md",
-    "System Model.canvas",
+    "LANGUAGE.md",
+    "ALLOBJECTS.md",
+    "spaced-repetition-algorithm.md",
     "SESSION.md",
-    "memory rate.md",
-    "CONTEXT.md",
-    "CUE.md",
     "Pasted image 20260101105641.png",
+    "CONTEXT.md",
+    "System Model.canvas",
     "Phases.md",
     "MEETING.md",
+    "memory rate.md",
+    "CUE.md",
     "schema-documentation.md",
+    "flashbrick-status-states.md",
     "System.md",
     "Welcome.md",
     "Objects",

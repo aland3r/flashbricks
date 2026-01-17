@@ -1,6 +1,6 @@
 ## Overview
 
-The `HUMAN` class represents a learner or tutor in the Flashbricks language learning system. It represents a user who conducts learning practices, collects flashbricks, and engages with vocabulary blocks to improve language proficiency.
+The `HUMAN` class represents a learner in the Flashbricks language learning system. It represents a user who conducts learning practices, collects flashbricks, and engages with vocabulary blocks to improve language proficiency.
 
 ## Definition
 

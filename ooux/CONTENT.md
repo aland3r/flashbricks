@@ -2,18 +2,18 @@
 
 ## Overview
 
-The `CONTENT` class represents the original source material used as input for learning and creation of flashbricks in the Flashbricks language learning system. Content exists independently before flashbricks are created from it and continues to exist regardless of flashbrick creation.
+The `CONTENT` represents the original source material used as input for learning and creation of flashbricks. Content exists independently before flashbricks are created from it and continues to exist regardless of flashbrick creation.
 
 ## Definition
 
-### Name
+### Preferred Name
 **CONTENT**
 
 ### Other Labels
-**Content; Source; Material; Input; Context**
+**Resource; Material; Input; Context**
 
 ### Purpose
-Represents the original material (videos, books, series, films, articles) that serves as the source for vocabulary extraction and flashbrick creation. A YouTube video, for example, exists before flashbricks are created from it and still exists without them. Content is the foundational input that enables vocabulary learning.
+Represents the original material (videos, books, series, films, articles) that serves as the source for vocabulary extraction and flashbrick creation. Content is the foundational input that enables contextualized vocabulary learning.
 
 ## Attributes
 
@@ -31,7 +31,7 @@ Represents the original material (videos, books, series, films, articles) that s
 |-----------|------|-------------|
 | `url` | `string` | URL or identifier for accessing the content. For YouTube videos: video URL. For books: ISBN or book identifier. Nullable for physical materials. |
 | `source_language` | `string` | Language code of the content (e.g., 'en', 'pt', 'de', 'fr'). Used to identify target language for vocabulary extraction. |
-| `duration` | `int` | Duration in seconds (for videos/audio) or pages/chapters (for books). Nullable for non-timed content. |
+| `duration` | `int` | Duration considering the length of the narration. Nullable for non-timed content. |
 | `description` | `text` | Description or summary of the content. Provides context for vocabulary extraction. Nullable. |
 
 ### Metadata
