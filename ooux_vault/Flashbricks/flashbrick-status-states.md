@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Flashbrick `status` attribute represents the current state of a flashcard in the learning cycle. This document defines all possible status values, their meanings, transition rules, and how each status affects memory_rate calculation. The flashbrick has unique characteristics that differenciates it from the card behaviour, in a sense that it has sides or faces, that label viriants of the picked vocabulary brick.
+The Flashbrick `status` attribute represents the current state of a flashcard in the learning cycle. This document defines all possible status values, their meanings, transition rules, and how each status affects vocabulary retention index (VRI) calculation. The flashbrick has unique characteristics that differenciates it from the card behaviour, in a sense that it has sides or faces, that label viriants of the picked vocabulary brick.
 
 ## Status Enum Values
 
@@ -14,14 +14,14 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 
 ### 1. `new`
 
-**Description**: Recently added/created flashbrick (just collected from Context).
+**Description**: Recently added/created flashbrick (just collected from CONTENT).
 
 **Characteristics**:
 - Temporary state immediately after creation
 - Automatically transitions to `asleep` after initial creation
 - Represents a flashbrick that has been extracted but not yet entered the learning cycle
 
-**Memory Rate Behavior**:
+**Vocabulary Retention Index (VRI) Behavior**:
 - Default initial value: `0.5`
 - No time-based decay applied
 - Calculation uses status modifier of `0.5`
@@ -29,7 +29,7 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 **Typical Duration**: Very short (seconds to minutes)
 
 **Transition Rules**:
-- **From**: Created from Context
+- **From**: Created from CONTENT
 - **To**: `asleep` (automatic)
 
 ---
@@ -44,9 +44,9 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 - Or user hasn't initiated review yet
 - No review history exists
 
-**Memory Rate Behavior**:
+**Vocabulary Retention Index (VRI) Behavior**:
 - **No calculation** (returns `null` or `0.0`)
-- Memory_rate is not meaningful for asleep flashbricks
+- Vocabulary retention index (VRI) is not meaningful for asleep flashbricks
 - Status modifier: `0.0` (excluded from calculation)
 
 **Typical Duration**: Indefinite (until user activates it)
@@ -67,7 +67,7 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 - Short intervals between reviews (minutes to hours)
 - First review performance determines initial ease_factor
 
-**Memory Rate Behavior**:
+**Vocabulary Retention Index (VRI) Behavior**:
 - Calculated based on initial performance
 - Status modifier: `0.6` (slight bonus for engagement)
 - Base calculation includes first review result
@@ -91,7 +91,7 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 - Multiple reviews needed before moving to spaced repetition
 - Performance tracked to determine readiness for longer intervals
 
-**Memory Rate Behavior**:
+**Vocabulary Retention Index (VRI) Behavior**:
 - Calculated based on performance during learning phase
 - Status modifier: `0.7` (learning phase adjustment)
 - Repetitions count starts accumulating
@@ -108,21 +108,21 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 
 ### 5. `review`
 
-**Description**: In regular spaced repetition cycle - uses calculated intervals based on memory_rate and performance.
+**Description**: In regular spaced repetition cycle - uses calculated intervals based on vocabulary retention index (VRI) and performance.
 
 **Characteristics**:
 - Established in the spaced repetition system
 - Intervals calculated based on ease_factor, repetitions, and performance
 - Standard review cycle with increasing intervals
-- Full memory_rate calculation applies
+- Full vocabulary retention index (VRI) calculation applies
 
-**Memory Rate Behavior**:
+**Vocabulary Retention Index (VRI) Behavior**:
 - **Full calculation** with all factors:
   - Base retention from repetitions and ease_factor
   - Time modifier for overdue reviews
   - Status modifier: `1.0` (normal calculation)
-  - Engagement modifier from session activity
-- Memory_rate directly influences next review interval
+  - Engagement modifier from practice activity
+- Vocabulary retention index (VRI) directly influences next review interval
 - Updates after each review
 
 **Typical Duration**: Ongoing (primary state for active learning)
@@ -140,17 +140,17 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 **Description**: Successfully mastered flashbrick - long intervals between reviews. Can transition back to forgotten if performance drops.
 
 **Characteristics**:
-- High memory_rate (typically > 0.8)
+- High vocabulary retention index (VRI, typically > 0.8)
 - Long intervals between reviews (weeks to months)
 - Consistent successful performance
 - Considered "mastered" but still needs periodic review
 
-**Memory Rate Behavior**:
+**Vocabulary Retention Index (VRI) Behavior**:
 - Full calculation with time modifiers
 - Status modifier: `1.0` (normal calculation)
 - High base retention due to many successful repetitions
 - Time modifier important (long intervals, overdue penalties significant)
-- Memory_rate should remain high (> 0.8)
+- Vocabulary retention index (VRI) should remain high (> 0.8)
 
 **Typical Duration**: Ongoing with long intervals
 
@@ -167,11 +167,11 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 **Characteristics**:
 - Previously in `review` or `retained` state
 - Failed a review (couldn't recall)
-- Memory_rate significantly decreased
+- Vocabulary retention index (VRI) significantly decreased
 - Needs relearning process
 
-**Memory Rate Behavior**:
-- **Reset or penalized** memory_rate
+**Vocabulary Retention Index (VRI) Behavior**:
+- **Reset or penalized** vocabulary retention index (VRI)
 - Status modifier: `0.15` (significant penalty)
 - Base retention reset based on failure
 - Repetitions may be reset or decreased
@@ -196,13 +196,13 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 - Focused on re-establishing retention
 - Performance tracked to determine recovery
 
-**Memory Rate Behavior**:
+**Vocabulary Retention Index (VRI) Behavior**:
 - **Recalculated with recovery adjustments**
 - Status modifier: `0.8` (recovery phase adjustment)
 - Base retention recalculated from current performance
 - Time modifier less critical (shorter intervals)
 - Ease_factor may be adjusted downward initially
-- Memory_rate should improve with successful reviews
+- Vocabulary retention index (VRI) should improve with successful reviews
 
 **Typical Duration**: Until recovery threshold reached (typically 2-4 successful reviews)
 
@@ -213,7 +213,7 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 ## Complete State Transition Diagram
 
 ```
-                    [Context creates]
+                    [CONTENT creates]
                           ↓
                          new
                           ↓ (automatic)
@@ -242,7 +242,7 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 
 | From Status | To Status | Trigger Condition |
 |------------|-----------|-------------------|
-| - | `new` | Flashbrick created from Context |
+| - | `new` | Flashbrick created from CONTENT |
 | `new` | `asleep` | Automatic (after creation) |
 | `asleep` | `picked` | User initiates first review |
 | `picked` | `learning` | First successful review |
@@ -253,9 +253,9 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 | `forgotten` | `relearning` | User attempts to relearn |
 | `relearning` | `review` | Recovery threshold reached (2-4 successful reviews) |
 
-## Memory Rate Calculation by Status
+## Vocabulary Retention Index (VRI) Calculation by Status
 
-| Status | Memory Rate Calculation | Status Modifier | Notes |
+| Status | Vocabulary Retention Index (VRI) Calculation | Status Modifier | Notes |
 |--------|------------------------|-----------------|-------|
 | `new` | Default initial (0.5) | 0.5 | Temporary state |
 | `asleep` | No calculation (null/0.0) | 0.0 | Not in learning cycle |
@@ -271,7 +271,7 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 ### Status Persistence
 - Status should be persisted in the database
 - Status changes should be logged for analytics
-- Status transitions should trigger memory_rate recalculation
+- Status transitions should trigger vocabulary retention index (VRI) recalculation
 
 ### Status Validation
 - Validate status transitions (prevent invalid state changes)
@@ -287,6 +287,6 @@ The Flashbrick `status` attribute represents the current state of a flashcard in
 ## Related Documentation
 
 - [Flashbrick Class Model](./flashbrick-class.md)
-- [Memory Rate Calculation Algorithm](memory%20rate.md)
+- [Vocabulary Retention Index Calculation Algorithm](VOCABULARY%20RETENTION%20INDEX%20(VRI).md)
 - [Spaced Repetition Algorithm](./spaced-repetition-algorithm.md)
 
